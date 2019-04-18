@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.*;
 public class MyHeap {
   private static void pushDown(int[] data, int size, int index) {
     //left child index
@@ -49,5 +50,11 @@ public class MyHeap {
 
   public static void heapsort(int[] data) {
 
+  }
+
+  public static void main(String[] args) {
+    int[] test = {3, 5, 9, 6, 7, 7, 5};
+    pushDown(test, 7, 0);
+    System.out.println(Arrays.toString(test));
   }
 }
