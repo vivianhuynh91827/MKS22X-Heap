@@ -41,7 +41,19 @@ public class MyHeap {
   }
 
   private static void pushUp(int[] data, int index) {
-
+    //if index is the root of the tree, end
+    if (index == 0) return;
+    //parent index
+    int parent = (n-1)/2;
+    int parentVal = data[parent];
+    //current value
+    int current = data[index];
+    //is parent is greater than current node, end
+    if (parent > current) return;
+    //if parent is less than current, swap values
+    data[index] = parentVal;
+    data[parent] = current;
+    pushUp(data, parent);
   }
 
   public static void heapify(int[] data) {
