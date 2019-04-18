@@ -44,7 +44,7 @@ public class MyHeap {
     //if index is the root of the tree, end
     if (index == 0) return;
     //parent index
-    int parent = (n-1)/2;
+    int parent = (index-1)/2;
     int parentVal = data[parent];
     //current value
     int current = data[index];
@@ -66,7 +66,8 @@ public class MyHeap {
 
   public static void main(String[] args) {
     int[] test = {3, 5, 9, 6, 7, 7, 5};
-    pushDown(test, 7, 0);
+    pushUp(test, 4);
+    // pushDown(test, 7, 0);
     System.out.println(Arrays.toString(test));
   }
 }
