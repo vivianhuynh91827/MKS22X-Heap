@@ -91,19 +91,50 @@ public class MyHeap {
       size--;
       indexLast--;
     }
+    if (data[0] > data[1]) {
+      int temp = data[0];
+      data[0] = data[1];
+      data[1] = temp;
+    }
   }
 
-  public static void main(String[] args) {
-    // int[] test = {8, 35, 79, 4, 17, 10, 50, 70,9,3,5,54,23,67,67,12,87,89,34,46};
-    int[] test = {9,8,7,65,4,4,3};
-    // pushUp(test, 4);
-    // pushDown(test, 7, 0);
-    // System.out.println(countRows(test));
-    System.out.println(HeapHelp.toString(test));
+  public static void main(String[]args){
+  System.out.println("Size\t\tMax Value\tquick/builtin ratio ");
+  int[]MAX_LIST = {1000000000,500,10};
+  for(int MAX : MAX_LIST){
+    for(int size = 31250; size < 1000001; size*=2){
+      long qtime=0;
+      long btime=0;
+      //average of 5 sorts.
+      for(int trial = 0 ; trial <=5; trial++){
+        int []data1 = new int[size];
+        int []data2 = new int[size];
+        for(int i = 0; i < data1.length; i++){
+          data1[i] = (int)(Math.random()*MAX);
+          data2[i] = data1[i];
+        }
+        long t1,t2;
+        t1 = System.currentTimeMillis();
+        MyHeap.heapsort(data2);
+        t2 = System.currentTimeMillis();
+        qtime += t2 - t1;
+        t1 = System.currentTimeMillis();
+        Arrays.sort(data1);
+        t2 = System.currentTimeMillis();
+        btime+= t2 - t1;
+        if(!Arrays.equals(data1,data2)){
+          System.out.println("FAIL TO SORT!");
+          System.exit(0);
+        }
+      }
+      System.out.println(size +"\t\t"+MAX+"\t"+1.0*qtime/btime);
+    }
     System.out.println();
-    heapsort(test);
-    System.out.println(Arrays.toString(test));
-    // heapify(test);
-    // System.out.println(HeapHelp.toString(test));
   }
+}
+  // public static void main(String[] args) {
+  //   int[] test = {20,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1};
+  //   heapsort(test);
+  //   System.out.println(Arrays.toString(test));
+  // }
 }
