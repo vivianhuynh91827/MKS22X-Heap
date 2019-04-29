@@ -9,9 +9,9 @@ public class MyHeap {
     //current node value
     int current = data[index];
     //if current index is a leaf
-    if (right >= size && left > size) return;
+    if (right >= size && left >= size - 1) return;
     //if current only has one child
-    if (right >= size) {
+    if (right == size && left == size - 1) {
       //if the child is less than current, end
       if (data[left] < current) return;
       // else, swap values and end
@@ -58,9 +58,9 @@ public class MyHeap {
 
   public static void heapify(int[] data) {
     if (data.length == 1) return;
-    int currentRow = countRows(data);
+    int rows = countRows(data);
     //the last element in the second to last row
-    int currentNode = (int)Math.pow(2,currentRow + 1) -2;
+    int currentNode = (int)Math.pow(2,rows) -2;
     // System.out.println(currentNode);
     while (currentNode >= 0) {
       pushDown(data, data.length, currentNode);
@@ -68,7 +68,7 @@ public class MyHeap {
     }
   }
 
-  //returns the row number of the row of branches above leaves
+  //returns the total number of rows
   private static int countRows(int[] data) {
     int exp = 0;
     int nodes = 0;
@@ -76,22 +76,34 @@ public class MyHeap {
       nodes += Math.pow(2, exp);
       exp++;
     }
-    return exp-2;
+    return exp-1;
   }
 
   public static void heapsort(int[] data) {
-
+    heapify(data);
+    int indexLast = data.length-1;
+    int size = data.length;
+    while (size!=0) {
+      pushDown(data, size, 0);
+      int temp = data[0];
+      data[0] = data[indexLast];
+      data[indexLast] = temp;
+      size--;
+      indexLast--;
+    }
   }
 
   public static void main(String[] args) {
     // int[] test = {8, 35, 79, 4, 17, 10, 50, 70,9,3,5,54,23,67,67,12,87,89,34,46};
-    int[] test = {1,2,3};
+    int[] test = {9,8,7,65,4,4,3};
     // pushUp(test, 4);
     // pushDown(test, 7, 0);
     // System.out.println(countRows(test));
     System.out.println(HeapHelp.toString(test));
     System.out.println();
-    heapify(test);
-    System.out.println(HeapHelp.toString(test));
+    heapsort(test);
+    System.out.println(Arrays.toString(test));
+    // heapify(test);
+    // System.out.println(HeapHelp.toString(test));
   }
 }
